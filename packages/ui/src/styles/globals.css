@@ -50,6 +50,8 @@
     --font-sans: var(--font-sans);
     --font-display: var(--font-manrope);
     --font-brand: var(--font-instrument-sans);
+    --font-stat: var(--font-plus-jakarta);
+    --font-label: var(--font-inter-tight);
 }
 
 @theme {

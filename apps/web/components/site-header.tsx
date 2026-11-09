@@ -3,11 +3,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import { MenuIcon } from "lucide-react"
+import { useState } from "react"
 
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -17,7 +17,7 @@ import { cn } from "@workspace/ui/lib/utils"
 
 const navigation = [
   { label: "Browse Jobs", href: "/jobs" },
-  { label: "Company", href: "/companies" },
+  { label: "Companies", href: "/companies" },
   { label: "Pricing", href: "/pricing" },
 ] as const
 
@@ -33,7 +33,6 @@ function Logo({ className }: { className?: string }) {
         alt="HireLoop"
         width={154}
         height={44}
-        priority
         unoptimized
         className="h-11 w-auto"
       />
@@ -42,6 +41,8 @@ function Logo({ className }: { className?: string }) {
 }
 
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <header className="sticky top-0 z-50 px-4 py-4 sm:px-6 sm:py-6">
       <div className="mx-auto flex h-[74px] w-full max-w-[1320px] items-center justify-between gap-4 rounded-[16px] bg-[#222222] pr-2 pl-4 sm:pl-6">
@@ -74,7 +75,7 @@ export function SiteHeader() {
               Sign In
             </Link>
             <Link
-              href="/register"
+              href="/sign-up"
               className={cn(
                 buttonVariants({ variant: "ghost" }),
                 "h-[52px] rounded-[12px] bg-[#5c53fe] px-[22px] font-brand text-lg font-medium text-white shadow-[inset_0_3px_10px_rgba(255,255,255,0.14)] transition-colors hover:bg-[#4c44e6] hover:text-white"
@@ -85,7 +86,7 @@ export function SiteHeader() {
           </div>
         </nav>
 
-        <Sheet>
+        <Sheet open={menuOpen} onOpenChange={(open) => setMenuOpen(open)}>
           <SheetTrigger
             render={
               <Button
@@ -110,50 +111,38 @@ export function SiteHeader() {
 
             <nav aria-label="Mobile" className="flex flex-col gap-1 px-3 py-3">
               {navigation.map((item) => (
-                <SheetClose
+                <Link
                   key={item.href}
-                  nativeButton={false}
-                  render={
-                    <Link
-                      href={item.href}
-                      className="rounded-xl px-4 py-3 text-base text-white/90 transition-colors hover:bg-white/5 hover:text-white"
-                    />
-                  }
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl px-4 py-3 text-base text-white/90 transition-colors hover:bg-white/5 hover:text-white"
                 >
                   {item.label}
-                </SheetClose>
+                </Link>
               ))}
             </nav>
 
             <div className="mt-auto flex flex-col gap-3 border-t border-white/10 p-4">
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/sign-in"
-                    className={cn(
-                      buttonVariants({ variant: "ghost" }),
-                      "h-12 w-full rounded-[12px] font-display text-base font-semibold text-[#5c53fe] shadow-[inset_0_3px_10px_rgba(255,255,255,0.14)] hover:bg-white/5 hover:text-[#5c53fe]"
-                    )}
-                  />
-                }
+              <Link
+                href="/sign-in"
+                onClick={() => setMenuOpen(false)}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "h-12 w-full rounded-[12px] font-display text-base font-semibold text-[#5c53fe] shadow-[inset_0_3px_10px_rgba(255,255,255,0.14)] hover:bg-white/5 hover:text-[#5c53fe]"
+                )}
               >
                 Sign In
-              </SheetClose>
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/register"
-                    className={cn(
-                      buttonVariants({ variant: "ghost" }),
-                      "h-12 w-full rounded-[12px] bg-[#5c53fe] font-brand text-base font-medium text-white hover:bg-[#4c44e6] hover:text-white"
-                    )}
-                  />
-                }
+              </Link>
+              <Link
+                href="/sign-up"
+                onClick={() => setMenuOpen(false)}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "h-12 w-full rounded-[12px] bg-[#5c53fe] font-brand text-base font-medium text-white hover:bg-[#4c44e6] hover:text-white"
+                )}
               >
                 Get Started
-              </SheetClose>
+              </Link>
             </div>
           </SheetContent>
         </Sheet>

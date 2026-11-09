@@ -48,6 +48,12 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     --font-sans: var(--font-sans);
+    --font-display: var(--font-manrope);
+    --font-brand: var(--font-instrument-sans);
+}
+
+@theme {
+    --breakpoint-nav: 56.25rem;
 }
 
 :root {
